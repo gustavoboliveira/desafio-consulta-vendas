@@ -12,8 +12,8 @@ import com.devsuperior.dsmeta.dto.SummaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.entities.Sale;
@@ -39,6 +39,10 @@ public class SaleService {
 
 		if(Objects.isNull(minDate))
 			minDate = maxDate.minusYears(1L);
+
+		if (!StringUtils.hasText(name)) {
+			name = null;
+		}
 
 		return repository.findReport(minDate, maxDate, name, pageable);
     }
